@@ -3,336 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Portfolio Manager</title>
+    <title>Crypto Portfolio • Professional Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #0a0e14;
+            --card: #11151c;
+            --border: #1e2530;
+            --text: #e0e7ff;
+            --text-muted: #94a3b8;
+            --accent: #f0b90b;
+            --green: #22c55e;
+            --red: #ef4444;
+            --radius: 12px;
+            --shadow: 0 10px 25px -5px rgba(0,0,0,0.4);
+        }
+
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            margin: 0; padding: 0; box-sizing: border-box;
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: #0b0e11;
-            color: #eaecef;
-            padding: 20px;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 24px 16px;
+            line-height: 1.5;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1440px;
             margin: 0 auto;
         }
 
         .header {
-            background: #1e2329;
-            padding: 20px 30px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            background: linear-gradient(135deg, #11151c, #0f131a);
+            border-radius: var(--radius);
+            padding: 24px 32px;
+            margin-bottom: 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
         }
 
         .header h1 {
-            color: #f0b90b;
-            font-size: 24px;
-        }
-
-        .total-balance {
-            text-align: right;
-        }
-
-        .total-balance-label {
-            color: #848e9c;
-            font-size: 14px;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #f0b90b, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .total-balance-value {
-            font-size: 32px;
-            font-weight: bold;
-            color: #f0b90b;
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .total-balance-label {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 4px;
         }
 
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 20px;
+            grid-template-columns: 2fr 1fr;
+            gap: 28px;
         }
 
-        .portfolio-section, .trade-section {
-            background: #1e2329;
-            border-radius: 10px;
-            padding: 25px;
+        .section {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 28px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
         }
 
         .section-title {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #eaecef;
-            border-bottom: 2px solid #2b3139;
-            padding-bottom: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #cbd5e1;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
         }
 
         .coin-list {
-            display: grid;
-            gap: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         .coin-card {
-            background: #2b3139;
-            border-radius: 8px;
+            background: linear-gradient(145deg, #131a24, #0f131a);
+            border-radius: var(--radius);
             padding: 20px;
-            display: grid;
-            grid-template-columns: 60px 1fr auto;
-            gap: 15px;
-            align-items: center;
-            transition: transform 0.2s;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border: 1px solid var(--border);
         }
 
         .coin-card:hover {
-            transform: translateY(-2px);
-            background: #2e3541;
+            transform: translateY(-4px);
+            border-color: #334155;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.5);
+        }
+
+        .coin-header {
+            display: grid;
+            grid-template-columns: 64px 1fr auto;
+            gap: 20px;
+            align-items: center;
         }
 
         .coin-icon {
-            width: 50px;
-            height: 50px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
+            background: linear-gradient(135deg, var(--accent), #fbbf24);
+            color: #0f131a;
         }
 
-        .btc { background: linear-gradient(135deg, #f7931a, #ff9500); }
-        .eth { background: linear-gradient(135deg, #627eea, #8c9eff); }
-        .bnb { background: linear-gradient(135deg, #f0b90b, #ffd700); }
-        .ada { background: linear-gradient(135deg, #0033ad, #3468e0); }
-        .xrp { background: linear-gradient(135deg, #23292f, #4a5568); }
-        .sol { background: linear-gradient(135deg, #14f195, #9945ff); }
+        .coin-info .coin-name { font-size: 18px; font-weight: 600; }
+        .coin-info .coin-symbol { color: var(--text-muted); font-size: 14px; }
+        .coin-price { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
 
-        .coin-info {
-            flex: 1;
-        }
+        .coin-stats { text-align: right; }
+        .coin-amount { font-size: 18px; font-weight: 600; }
+        .coin-value { font-size: 20px; font-weight: 700; color: white; margin: 4px 0; }
 
-        .coin-name {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+        .expand-icon { font-size: 14px; color: var(--text-muted); transition: transform 0.3s; }
+        .coin-card.expanded .expand-icon { transform: rotate(180deg); }
 
-        .coin-symbol {
-            color: #848e9c;
+        .coin-details {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            display: none;
             font-size: 14px;
+            color: var(--text-muted);
         }
 
-        .coin-price {
-            color: #848e9c;
-            font-size: 13px;
-            margin-top: 3px;
+        .coin-card.expanded .coin-details { display: block; }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(30,37,48,0.5);
         }
 
-        .coin-stats {
-            text-align: right;
+        .detail-row:last-child { border-bottom: none; }
+
+        .detail-row span:last-child {
+            color: white;
+            font-weight: 500;
         }
 
-        .coin-amount {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .coin-value {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 3px;
-        }
-
-        .coin-pnl {
+        .transaction-history {
+            margin-top: 16px;
             font-size: 13px;
         }
 
-        .positive {
-            color: #0ecb81;
+        .transaction-item {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
         }
 
-        .negative {
-            color: #f6465d;
-        }
+        .transaction-type.buy { color: var(--green); font-weight: 600; }
+        .transaction-type.sell { color: var(--red); font-weight: 600; }
 
+        /* Form */
         .trade-form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        label {
-            color: #848e9c;
+        .form-group label {
             font-size: 14px;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            display: block;
         }
 
-        select, input {
-            background: #2b3139;
-            border: 1px solid #474d57;
-            border-radius: 6px;
-            padding: 12px;
-            color: #eaecef;
-            font-size: 14px;
+        input, select {
+            width: 100%;
+            padding: 14px 16px;
+            background: #0f131a;
+            border: 1px solid #1e2530;
+            border-radius: 10px;
+            color: white;
+            font-size: 15px;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent);
             outline: none;
         }
 
-        select:focus, input:focus {
-            border-color: #f0b90b;
-        }
-
-        .input-group {
-            position: relative;
-        }
-
+        .input-group { position: relative; }
         .input-suffix {
             position: absolute;
-            right: 12px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: #848e9c;
-            font-size: 14px;
+            color: var(--text-muted);
+            pointer-events: none;
         }
 
         .current-price {
-            background: #2b3139;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 13px;
-            color: #848e9c;
+            background: #0f131a;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            font-size: 15px;
         }
 
-        .current-price span {
-            color: #f0b90b;
-            font-weight: bold;
-        }
+        .current-price span { color: var(--accent); font-weight: 600; }
 
         .btn-group {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 10px;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
         }
 
         button {
-            padding: 14px;
+            padding: 16px;
             border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: bold;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
 
-        .btn-buy {
-            background: #0ecb81;
-            color: white;
-        }
+        .btn-buy { background: var(--green); color: white; }
+        .btn-buy:hover { background: #16a34a; }
 
-        .btn-buy:hover {
-            background: #0bb871;
-        }
+        .btn-sell { background: var(--red); color: white; }
+        .btn-sell:hover { background: #dc2626; }
 
-        .btn-sell {
-            background: #f6465d;
-            color: white;
-        }
-
-        .btn-sell:hover {
-            background: #e03d52;
-        }
-
-        .btn-reset {
-            background: #474d57;
-            color: white;
-            grid-column: 1 / -1;
-        }
-
-        .btn-reset:hover {
-            background: #5e6673;
-        }
+        .btn-reset { background: #334155; color: white; grid-column: 1 / -1; }
+        .btn-reset:hover { background: #475569; }
 
         .no-holdings {
             text-align: center;
-            padding: 40px;
-            color: #848e9c;
+            padding: 80px 20px;
+            color: var(--text-muted);
+            font-size: 18px;
         }
 
-        .no-holdings-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
+        @media (max-width: 1024px) {
+            .main-content { grid-template-columns: 1fr; }
+            .btn-group { grid-template-columns: 1fr 1fr; }
+            .btn-reset { grid-column: auto; }
         }
 
-        .summary {
-            background: #2b3139;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .summary-row:last-child {
-            margin-bottom: 0;
-            padding-top: 10px;
-            border-top: 1px solid #474d57;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        @media (max-width: 968px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: #848e9c;
+        @media (max-width: 640px) {
+            .header { flex-direction: column; gap: 16px; text-align: center; }
+            .total-balance { text-align: center; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚀 Crypto Portfolio Manager</h1>
+            <h1>Crypto Portfolio</h1>
             <div class="total-balance">
-                <div class="total-balance-label">Tổng tài sản</div>
+                <div class="total-balance-label">Total Balance (USD)</div>
                 <div class="total-balance-value" id="totalBalance">$0.00</div>
             </div>
         </div>
 
         <div class="main-content">
-            <div class="portfolio-section">
-                <h2 class="section-title">📊 Danh Mục Đầu Tư</h2>
+            <div class="section">
+                <h2 class="section-title">My Holdings</h2>
                 <div id="portfolioList" class="coin-list">
-                    <div class="loading">Đang tải dữ liệu...</div>
+                    <div class="no-holdings">Loading market data...</div>
                 </div>
             </div>
 
-            <div class="trade-section">
-                <h2 class="section-title">💰 Giao Dịch Spot</h2>
+            <div class="section">
+                <h2 class="section-title">Quick Trade</h2>
                 <form class="trade-form" id="tradeForm">
                     <div class="form-group">
-                        <label>Chọn Coin</label>
+                        <label>Coin</label>
                         <select id="coinSelect" required>
-                            <option value="">-- Chọn coin --</option>
+                            <option value="">Choose a coin</option>
                             <option value="bitcoin">BTC - Bitcoin</option>
                             <option value="ethereum">ETH - Ethereum</option>
                             <option value="binancecoin">BNB - Binance Coin</option>
@@ -343,35 +314,36 @@
                     </div>
 
                     <div class="current-price" id="currentPriceDisplay">
-                        Chọn coin để xem giá hiện tại
+                        Choose a coin to see current price
                     </div>
 
                     <div class="form-group">
-                        <label>Số lượng Coin</label>
+                        <label>Amount</label>
                         <div class="input-group">
-                            <input type="number" id="amountInput" step="0.00000001" min="0" placeholder="0.00" required>
+                            <input type="number" id="amountInput" step="0.00000001" min="0" placeholder="0.00000000">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Giá mua (USD)</label>
+                        <label>Total USD</label>
+                        <div class="input-group">
+                            <input type="number" id="totalUsdInput" step="0.01" min="0" placeholder="0.00">
+                            <span class="input-suffix">USD</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Price (USD / coin)</label>
                         <div class="input-group">
                             <input type="number" id="priceInput" step="0.01" min="0" placeholder="0.00" required>
                             <span class="input-suffix">USD</span>
                         </div>
                     </div>
 
-                    <div class="summary">
-                        <div class="summary-row">
-                            <span>Tổng tiền:</span>
-                            <span id="totalCost">$0.00</span>
-                        </div>
-                    </div>
-
                     <div class="btn-group">
-                        <button type="submit" class="btn-buy">Mua</button>
-                        <button type="button" class="btn-sell" onclick="sellCoin()">Bán</button>
-                        <button type="button" class="btn-reset" onclick="resetPortfolio()">Reset Portfolio</button>
+                        <button type="submit" class="btn-buy">Buy</button>
+                        <button type="button" class="btn-sell" onclick="sellCoin()">Buy</button>
+                        <button type="button" class="btn-reset" onclick="resetPortfolio()">Reset</button>
                     </div>
                 </form>
             </div>
@@ -391,7 +363,6 @@
         let currentPrices = {};
         let portfolio = JSON.parse(localStorage.getItem('cryptoPortfolio')) || {};
 
-        // Format number
         function formatNumber(num, decimals = 2) {
             return new Intl.NumberFormat('en-US', {
                 minimumFractionDigits: decimals,
@@ -399,12 +370,20 @@
             }).format(num);
         }
 
-        // Format currency
         function formatCurrency(num) {
             return '$' + formatNumber(num, 2);
         }
 
-        // Fetch prices
+        function formatDate(timestamp) {
+            return new Date(timestamp).toLocaleString('vi-VN');
+        }
+
+        function formatDateShort(timestamp) {
+            return new Date(timestamp).toLocaleString('vi-VN', {
+                month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'
+            });
+        }
+
         async function fetchPrices() {
             try {
                 const coinIds = Object.keys(COINS).join(',');
@@ -412,18 +391,19 @@
                     `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds}&vs_currencies=usd`
                 );
                 const data = await response.json();
-                
                 Object.keys(data).forEach(coin => {
                     currentPrices[coin] = data[coin].usd;
                 });
-                
                 updatePortfolioDisplay();
             } catch (error) {
                 console.error('Error fetching prices:', error);
             }
         }
 
-        // Update portfolio display
+        function toggleCoinDetails(coinId) {
+            document.getElementById(`coin-${coinId}`).classList.toggle('expanded');
+        }
+
         function updatePortfolioDisplay() {
             const portfolioList = document.getElementById('portfolioList');
             const hasHoldings = Object.keys(portfolio).length > 0;
@@ -433,7 +413,6 @@
                     <div class="no-holdings">
                         <div class="no-holdings-icon">📭</div>
                         <div>Chưa có coin nào trong portfolio</div>
-                        <div style="font-size: 13px; margin-top: 10px;">Bắt đầu mua coin để xây dựng danh mục đầu tư</div>
                     </div>
                 `;
                 document.getElementById('totalBalance').textContent = '$0.00';
@@ -448,25 +427,59 @@
                 const coin = COINS[coinId];
                 const currentPrice = currentPrices[coinId] || 0;
                 const currentValue = holding.amount * currentPrice;
-                const totalCost = holding.totalCost || 0;
-                const pnl = currentValue - totalCost;
-                const pnlPercent = totalCost > 0 ? (pnl / totalCost) * 100 : 0;
 
                 totalValue += currentValue;
 
+                const transactions = holding.transactions || [];
+                const lastTx = transactions[transactions.length - 1];
+                const lastTxTime = lastTx ? formatDateShort(lastTx.timestamp) : '';
+
                 html += `
-                    <div class="coin-card">
-                        <div class="coin-icon ${coin.class}">${coin.icon}</div>
-                        <div class="coin-info">
-                            <div class="coin-name">${coin.name}</div>
-                            <div class="coin-symbol">${coin.symbol}</div>
-                            <div class="coin-price">@${formatCurrency(currentPrice)}</div>
+                    <div class="coin-card" id="coin-${coinId}" onclick="toggleCoinDetails('${coinId}')">
+                        <div class="coin-header">
+                            <div class="coin-icon ${coin.class}">${coin.icon}</div>
+                            <div class="coin-info">
+                                <div class="coin-name">${coin.name}</div>
+                                <div class="coin-symbol">${coin.symbol}</div>
+                                <div class="coin-price">@${formatCurrency(currentPrice)}</div>
+                                ${lastTxTime ? `<div class="last-tx-time">Giao dịch gần nhất: ${lastTxTime}</div>` : ''}
+                            </div>
+                            <div class="coin-stats">
+                                <div class="coin-amount">${formatNumber(holding.amount, 8)} ${coin.symbol}</div>
+                                <div class="coin-value">${formatCurrency(currentValue)}</div>
+                                <div class="expand-icon">▼</div>
+                            </div>
                         </div>
-                        <div class="coin-stats">
-                            <div class="coin-amount">${formatNumber(holding.amount, 8)} ${coin.symbol}</div>
-                            <div class="coin-value">${formatCurrency(currentValue)}</div>
-                            <div class="coin-pnl ${pnl >= 0 ? 'positive' : 'negative'}">
-                                ${pnl >= 0 ? '+' : ''}${formatCurrency(pnl)} (${pnl >= 0 ? '+' : ''}${formatNumber(pnlPercent, 2)}%)
+                        <div class="coin-details">
+                            <div class="detail-row">
+                                <span>Số lượng hiện tại:</span>
+                                <span>${formatNumber(holding.amount, 8)} ${coin.symbol}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Giá trị hiện tại:</span>
+                                <span>${formatCurrency(currentValue)}</span>
+                            </div>
+                            ${lastTx ? `
+                                <div class="detail-row">
+                                    <span>Giao dịch gần nhất:</span>
+                                    <span>${formatDate(lastTx.timestamp)} - ${lastTx.type === 'buy' ? 'MUA' : 'BÁN'}</span>
+                                </div>
+                            ` : ''}
+                            <div style="margin-top: 12px; font-size: 13px; color: #848e9c;">
+                                Lịch sử giao dịch (${transactions.length} lần):
+                            </div>
+                            <div class="transaction-history">
+                                ${transactions.slice().reverse().map(tx => `
+                                    <div class="transaction-item">
+                                        <div class="transaction-header">
+                                            <span class="transaction-type ${tx.type}">${tx.type === 'buy' ? '🟢 MUA' : '🔴 BÁN'}</span>
+                                            <span>${formatDateShort(tx.timestamp)}</span>
+                                        </div>
+                                        <div class="transaction-details">
+                                            ${formatNumber(tx.amount, 8)} ${coin.symbol} @ ${formatCurrency(tx.price)} = ${formatCurrency(tx.total)}
+                                        </div>
+                                    </div>
+                                `).join('')}
                             </div>
                         </div>
                     </div>
@@ -477,42 +490,55 @@
             document.getElementById('totalBalance').textContent = formatCurrency(totalValue);
         }
 
-        // Update current price display
+        // ── Quy đổi 2 chiều: Amount ↔ Total USD ──
+        function syncAmountAndTotal(direction = 'amount') {
+            const amountEl = document.getElementById('amountInput');
+            const totalEl  = document.getElementById('totalUsdInput');
+            const priceEl  = document.getElementById('priceInput');
+
+            const price = parseFloat(priceEl.value) || 0;
+
+            if (price <= 0) return;
+
+            if (direction === 'amount') {
+                const amount = parseFloat(amountEl.value) || 0;
+                totalEl.value = (amount * price).toFixed(2);
+            } else {
+                const total = parseFloat(totalEl.value) || 0;
+                amountEl.value = (total / price).toFixed(8);
+            }
+        }
+
         document.getElementById('coinSelect').addEventListener('change', function() {
             const coinId = this.value;
             const priceDisplay = document.getElementById('currentPriceDisplay');
             const priceInput = document.getElementById('priceInput');
-            
+
             if (coinId && currentPrices[coinId]) {
                 const price = currentPrices[coinId];
-                priceDisplay.innerHTML = `Giá hiện tại: <span>${formatCurrency(price)}</span>`;
-                priceInput.value = price;
-                calculateTotal();
+                priceDisplay.innerHTML = `Giá thị trường: <span>${formatCurrency(price)}</span>`;
+                priceInput.value = price.toFixed(2);
+                syncAmountAndTotal('amount'); // cập nhật lại total khi đổi coin
             } else {
-                priceDisplay.textContent = 'Chọn coin để xem giá hiện tại';
+                priceDisplay.textContent = 'Choose a coin to see current price';
                 priceInput.value = '';
+                document.getElementById('totalUsdInput').value = '';
             }
         });
 
-        // Calculate total cost
-        function calculateTotal() {
-            const amount = parseFloat(document.getElementById('amountInput').value) || 0;
-            const price = parseFloat(document.getElementById('priceInput').value) || 0;
-            const total = amount * price;
-            document.getElementById('totalCost').textContent = formatCurrency(total);
-        }
+        document.getElementById('amountInput').addEventListener('input', () => syncAmountAndTotal('amount'));
+        document.getElementById('totalUsdInput').addEventListener('input', () => syncAmountAndTotal('total'));
+        document.getElementById('priceInput').addEventListener('input', () => syncAmountAndTotal('amount'));
 
-        document.getElementById('amountInput').addEventListener('input', calculateTotal);
-        document.getElementById('priceInput').addEventListener('input', calculateTotal);
-
-        // Buy coin
+        // Buy
         document.getElementById('tradeForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             const coinId = document.getElementById('coinSelect').value;
             const amount = parseFloat(document.getElementById('amountInput').value);
-            const price = parseFloat(document.getElementById('priceInput').value);
-            const totalCost = amount * price;
+            const price  = parseFloat(document.getElementById('priceInput').value);
+            const total  = amount * price;
+            const timestamp = Date.now();
 
             if (!coinId || amount <= 0 || price <= 0) {
                 alert('Vui lòng nhập đầy đủ thông tin!');
@@ -520,31 +546,35 @@
             }
 
             if (!portfolio[coinId]) {
-                portfolio[coinId] = {
-                    amount: 0,
-                    totalCost: 0
-                };
+                portfolio[coinId] = { amount: 0, transactions: [] };
             }
 
+            portfolio[coinId].transactions.push({
+                type: 'buy',
+                amount,
+                price,
+                total,
+                timestamp
+            });
+
             portfolio[coinId].amount += amount;
-            portfolio[coinId].totalCost += totalCost;
 
             localStorage.setItem('cryptoPortfolio', JSON.stringify(portfolio));
-            
-            alert(`✅ Đã mua ${formatNumber(amount, 8)} ${COINS[coinId].symbol} với giá ${formatCurrency(totalCost)}`);
-            
+
+            alert(`✅ MUA thành công!\n${formatNumber(amount, 8)} ${COINS[coinId].symbol} @ ${formatCurrency(price)}\nTổng: ${formatCurrency(total)}`);
+
             this.reset();
-            document.getElementById('currentPriceDisplay').textContent = 'Chọn coin để xem giá hiện tại';
-            document.getElementById('totalCost').textContent = '$0.00';
-            
+            document.getElementById('totalUsdInput').value = '';
+            document.getElementById('currentPriceDisplay').textContent = 'Choose a coin to see current price';
             updatePortfolioDisplay();
         });
 
-        // Sell coin
+        // Sell (giữ nguyên logic FIFO đơn giản)
         function sellCoin() {
             const coinId = document.getElementById('coinSelect').value;
             const amount = parseFloat(document.getElementById('amountInput').value);
-            const price = parseFloat(document.getElementById('priceInput').value);
+            const price  = parseFloat(document.getElementById('priceInput').value);
+            const timestamp = Date.now();
 
             if (!coinId || amount <= 0 || price <= 0) {
                 alert('Vui lòng nhập đầy đủ thông tin!');
@@ -552,46 +582,47 @@
             }
 
             if (!portfolio[coinId] || portfolio[coinId].amount < amount) {
-                alert('❌ Không đủ số lượng coin để bán!');
+                alert('❌ Không đủ số lượng để bán!');
                 return;
             }
 
             const sellValue = amount * price;
-            const avgCost = portfolio[coinId].totalCost / portfolio[coinId].amount;
-            const costOfSold = amount * avgCost;
-            
+
+            portfolio[coinId].transactions.push({
+                type: 'sell',
+                amount,
+                price,
+                total: sellValue,
+                timestamp
+            });
+
             portfolio[coinId].amount -= amount;
-            portfolio[coinId].totalCost -= costOfSold;
 
             if (portfolio[coinId].amount < 0.00000001) {
                 delete portfolio[coinId];
             }
 
             localStorage.setItem('cryptoPortfolio', JSON.stringify(portfolio));
-            
-            const profit = sellValue - costOfSold;
-            alert(`✅ Đã bán ${formatNumber(amount, 8)} ${COINS[coinId].symbol}\nGiá trị: ${formatCurrency(sellValue)}\nLãi/Lỗ: ${profit >= 0 ? '+' : ''}${formatCurrency(profit)}`);
-            
+
+            alert(`✅ BÁN thành công!\n${formatNumber(amount, 8)} ${COINS[coinId].symbol} @ ${formatCurrency(price)}\nNhận: ${formatCurrency(sellValue)}`);
+
             document.getElementById('tradeForm').reset();
+            document.getElementById('totalUsdInput').value = '';
             document.getElementById('currentPriceDisplay').textContent = 'Chọn coin để xem giá hiện tại';
-            document.getElementById('totalCost').textContent = '$0.00';
-            
             updatePortfolioDisplay();
         }
 
-        // Reset portfolio
         function resetPortfolio() {
-            if (confirm('⚠️ Bạn có chắc muốn xóa toàn bộ portfolio? Hành động này không thể hoàn tác!')) {
+            if (confirm('Bạn có chắc muốn xóa toàn bộ portfolio?')) {
                 portfolio = {};
                 localStorage.removeItem('cryptoPortfolio');
                 updatePortfolioDisplay();
-                alert('✅ Đã reset portfolio thành công!');
+                alert('Đã reset portfolio!');
             }
         }
 
-        // Initialize
         fetchPrices();
-        setInterval(fetchPrices, 30000); // Update every 30 seconds
+        setInterval(fetchPrices, 30000);
     </script>
 </body>
 </html>
