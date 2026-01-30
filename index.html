@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +9,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0e14;
-            --card: #11151c;
-            --border: #1e2530;
-            --text: #e0e7ff;
-            --text-muted: #94a3b8;
-            --accent: #f0b90b;
-            --green: #22c55e;
+            --bg: #0a0e17;
+            --card: #111827;
+            --border: #1f2937;
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+            --accent: #fbbf24;
+            --green: #10b981;
+            --green-dark: #059669;
             --red: #ef4444;
-            --radius: 12px;
-            --shadow: 0 10px 25px -5px rgba(0,0,0,0.4);
+            --red-dark: #dc2626;
+            --radius: 16px;
+            --shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+            --glow-green: 0 0 20px rgba(16, 185, 129, 0.4);
+            --glow-red: 0 0 20px rgba(239, 68, 68, 0.4);
         }
 
         * {
@@ -30,20 +34,20 @@
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
-            padding: 24px 16px;
-            line-height: 1.5;
+            padding: 32px 16px;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 1440px;
+            max-width: 1480px;
             margin: 0 auto;
         }
 
         .header {
-            background: linear-gradient(135deg, #11151c, #0f131a);
+            background: linear-gradient(135deg, #111827, #0f172a);
             border-radius: var(--radius);
-            padding: 24px 32px;
-            margin-bottom: 32px;
+            padding: 28px 40px;
+            margin-bottom: 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -52,106 +56,104 @@
         }
 
         .header h1 {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
-            background: linear-gradient(90deg, #f0b90b, #fbbf24);
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .total-balance-value {
-            font-size: 40px;
-            font-weight: 700;
+            font-size: 48px;
+            font-weight: 800;
             color: var(--accent);
         }
 
         .total-balance-label {
             color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 4px;
+            font-size: 15px;
+            margin-bottom: 6px;
         }
 
         .main-content {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 28px;
+            gap: 32px;
         }
 
         .section {
             background: var(--card);
             border-radius: var(--radius);
-            padding: 28px;
+            padding: 32px;
             border: 1px solid var(--border);
             box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
         }
 
         .section-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 24px;
-            color: #cbd5e1;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 28px;
+            color: #f3f4f6;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 12px;
+            padding-bottom: 14px;
         }
 
         .coin-list {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 20px;
         }
 
         .coin-card {
-            background: linear-gradient(145deg, #131a24, #0f131a);
+            background: linear-gradient(145deg, #172038, #0f172a);
             border-radius: var(--radius);
-            padding: 20px;
-            transition: all 0.25s ease;
+            padding: 24px;
+            transition: all 0.3s ease;
             cursor: pointer;
             border: 1px solid var(--border);
         }
 
         .coin-card:hover {
-            transform: translateY(-4px);
-            border-color: #334155;
-            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.5);
+            transform: translateY(-6px);
+            border-color: #4b5563;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);
         }
 
         .coin-header {
             display: grid;
-            grid-template-columns: 64px 1fr auto;
-            gap: 20px;
+            grid-template-columns: 72px 1fr auto;
+            gap: 24px;
             align-items: center;
         }
 
-        .coin-icon {
-            width: 56px;
-            height: 56px;
+        .coin-icon-real {
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: bold;
-            background: linear-gradient(135deg, var(--accent), #fbbf24);
-            color: #0f131a;
+            object-fit: contain;
+            background: #0f172a;
+            border: 2px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
-        .coin-info .coin-name { font-size: 18px; font-weight: 600; }
-        .coin-info .coin-symbol { color: var(--text-muted); font-size: 14px; }
-        .coin-price { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+        .coin-info .coin-name { font-size: 20px; font-weight: 700; }
+        .coin-info .coin-symbol { color: var(--text-muted); font-size: 15px; }
+        .coin-price { color: var(--text-muted); font-size: 14px; margin-top: 6px; }
 
         .coin-stats { text-align: right; }
-        .coin-amount { font-size: 18px; font-weight: 600; }
-        .coin-value { font-size: 20px; font-weight: 700; color: white; margin: 4px 0; }
+        .coin-amount { font-size: 19px; font-weight: 600; }
+        .coin-value { font-size: 24px; font-weight: 800; color: #ffffff; margin: 6px 0; }
 
-        .expand-icon { font-size: 14px; color: var(--text-muted); transition: transform 0.3s; }
+        .expand-icon { font-size: 16px; color: var(--text-muted); transition: transform 0.4s; }
         .coin-card.expanded .expand-icon { transform: rotate(180deg); }
 
         .coin-details {
-            margin-top: 20px;
-            padding-top: 20px;
+            margin-top: 24px;
+            padding-top: 24px;
             border-top: 1px solid var(--border);
             display: none;
-            font-size: 14px;
+            font-size: 15px;
             color: var(--text-muted);
         }
 
@@ -160,111 +162,145 @@
         .detail-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(30,37,48,0.5);
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(31,41,55,0.5);
         }
 
         .detail-row:last-child { border-bottom: none; }
 
         .detail-row span:last-child {
-            color: white;
-            font-weight: 500;
+            color: #ffffff;
+            font-weight: 600;
         }
 
         .transaction-history {
-            margin-top: 16px;
-            font-size: 13px;
+            margin-top: 20px;
+            font-size: 14px;
         }
 
         .transaction-item {
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid var(--border);
         }
 
-        .transaction-type.buy { color: var(--green); font-weight: 600; }
-        .transaction-type.sell { color: var(--red); font-weight: 600; }
+        .transaction-type.buy { color: var(--green); font-weight: 700; }
+        .transaction-type.sell { color: var(--red); font-weight: 700; }
 
-        /* Form */
+        /* ── FORM ── */
         .trade-form {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
         .form-group label {
-            font-size: 14px;
-            color: #cbd5e1;
-            margin-bottom: 8px;
+            font-size: 15px;
+            color: #d1d5db;
+            margin-bottom: 10px;
             display: block;
+            font-weight: 500;
         }
 
         input, select {
             width: 100%;
-            padding: 14px 16px;
-            background: #0f131a;
-            border: 1px solid #1e2530;
-            border-radius: 10px;
+            padding: 16px 20px;
+            background: #0f172a;
+            border: 1px solid #374151;
+            border-radius: 12px;
             color: white;
-            font-size: 15px;
-            transition: border-color 0.2s;
+            font-size: 16px;
+            transition: all 0.2s;
         }
 
         input:focus, select:focus {
             border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2);
             outline: none;
         }
 
         .input-group { position: relative; }
         .input-suffix {
             position: absolute;
-            right: 16px;
+            right: 20px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
             pointer-events: none;
+            font-weight: 500;
         }
 
         .current-price {
-            background: #0f131a;
-            padding: 14px 16px;
-            border-radius: 10px;
+            background: #0f172a;
+            padding: 16px 20px;
+            border-radius: 12px;
             border: 1px solid var(--border);
-            font-size: 15px;
+            font-size: 16px;
+            color: var(--text);
         }
 
-        .current-price span { color: var(--accent); font-weight: 600; }
+        .current-price span { color: var(--accent); font-weight: 700; }
 
         .btn-group {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-            margin-top: 12px;
+            gap: 16px;
+            margin-top: 16px;
         }
 
         button {
-            padding: 16px;
+            padding: 18px 24px;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
 
-        .btn-buy { background: var(--green); color: white; }
-        .btn-buy:hover { background: #16a34a; }
+        .btn-buy {
+            background: linear-gradient(135deg, var(--green), #059669);
+            color: white;
+            box-shadow: var(--glow-green);
+            grid-column: 1 / -1;
+        }
 
-        .btn-sell { background: var(--red); color: white; }
-        .btn-sell:hover { background: #dc2626; }
+        .btn-buy:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(16,185,129,0.5);
+            filter: brightness(1.1);
+        }
 
-        .btn-reset { background: #334155; color: white; grid-column: 1 / -1; }
-        .btn-reset:hover { background: #475569; }
+        .btn-sell {
+            background: linear-gradient(135deg, var(--red), #b91c1c);
+            color: white;
+            box-shadow: var(--glow-red);
+            grid-column: 1 / -1;
+        }
+
+        .btn-sell:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(239,68,68,0.5);
+            filter: brightness(1.1);
+            
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #4b5563, #374151);
+            color: white;
+            grid-column: 1 / -1;
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+        }
 
         .no-holdings {
             text-align: center;
-            padding: 80px 20px;
+            padding: 100px 24px;
             color: var(--text-muted);
-            font-size: 18px;
+            font-size: 20px;
         }
 
         @media (max-width: 1024px) {
@@ -274,7 +310,7 @@
         }
 
         @media (max-width: 640px) {
-            .header { flex-direction: column; gap: 16px; text-align: center; }
+            .header { flex-direction: column; gap: 20px; text-align: center; }
             .total-balance { text-align: center; }
         }
     </style>
@@ -303,7 +339,7 @@
                     <div class="form-group">
                         <label>Coin</label>
                         <select id="coinSelect" required>
-                            <option value="">Choose a coin</option>
+                            <option value="">Select a coin</option>
                             <option value="bitcoin">BTC - Bitcoin</option>
                             <option value="ethereum">ETH - Ethereum</option>
                             <option value="binancecoin">BNB - Binance Coin</option>
@@ -314,7 +350,7 @@
                     </div>
 
                     <div class="current-price" id="currentPriceDisplay">
-                        Choose a coin to see current price
+                        Select a coin to see current price
                     </div>
 
                     <div class="form-group">
@@ -342,8 +378,8 @@
 
                     <div class="btn-group">
                         <button type="submit" class="btn-buy">Buy</button>
-                        <button type="button" class="btn-sell" onclick="sellCoin()">Buy</button>
-                        <button type="button" class="btn-reset" onclick="resetPortfolio()">Reset</button>
+                        <button type="button" class="btn-sell" onclick="sellCoin()">Sell</button>
+                        <button type="button" class="btn-reset" onclick="resetPortfolio()">Reset Portfolio</button>
                     </div>
                 </form>
             </div>
@@ -352,12 +388,12 @@
 
     <script>
         const COINS = {
-            bitcoin: { name: 'Bitcoin', symbol: 'BTC', icon: '₿', class: 'btc' },
-            ethereum: { name: 'Ethereum', symbol: 'ETH', icon: 'Ξ', class: 'eth' },
-            binancecoin: { name: 'Binance Coin', symbol: 'BNB', icon: 'B', class: 'bnb' },
-            cardano: { name: 'Cardano', symbol: 'ADA', icon: 'A', class: 'ada' },
-            ripple: { name: 'Ripple', symbol: 'XRP', icon: 'X', class: 'xrp' },
-            solana: { name: 'Solana', symbol: 'SOL', icon: 'S', class: 'sol' }
+            bitcoin: { name: 'Bitcoin', symbol: 'BTC', icon: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=035' },
+            ethereum: { name: 'Ethereum', symbol: 'ETH', icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.png?v=035' },
+            binancecoin: { name: 'Binance Coin', symbol: 'BNB', icon: 'https://cryptologos.cc/logos/bnb-bnb-logo.png?v=035' },
+            cardano: { name: 'Cardano', symbol: 'ADA', icon: 'https://cryptologos.cc/logos/cardano-ada-logo.png?v=035' },
+            ripple: { name: 'Ripple', symbol: 'XRP', icon: 'https://cryptologos.cc/logos/xrp-xrp-logo.png?v=035' },
+            solana: { name: 'Solana', symbol: 'SOL', icon: 'https://cryptologos.cc/logos/solana-sol-logo.png?v=035' }
         };
 
         let currentPrices = {};
@@ -375,12 +411,12 @@
         }
 
         function formatDate(timestamp) {
-            return new Date(timestamp).toLocaleString('vi-VN');
+            return new Date(timestamp).toLocaleString('en-US');
         }
 
         function formatDateShort(timestamp) {
-            return new Date(timestamp).toLocaleString('vi-VN', {
-                month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'
+            return new Date(timestamp).toLocaleString('en-US', {
+                month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
             });
         }
 
@@ -390,6 +426,7 @@
                 const response = await fetch(
                     `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds}&vs_currencies=usd`
                 );
+                if (!response.ok) throw new Error('Network error');
                 const data = await response.json();
                 Object.keys(data).forEach(coin => {
                     currentPrices[coin] = data[coin].usd;
@@ -397,6 +434,8 @@
                 updatePortfolioDisplay();
             } catch (error) {
                 console.error('Error fetching prices:', error);
+                document.getElementById('portfolioList').innerHTML = 
+                    '<div class="no-holdings">Unable to load market prices. Please try again later.</div>';
             }
         }
 
@@ -411,8 +450,8 @@
             if (!hasHoldings) {
                 portfolioList.innerHTML = `
                     <div class="no-holdings">
-                        <div class="no-holdings-icon">📭</div>
-                        <div>Chưa có coin nào trong portfolio</div>
+                        <div style="font-size: 48px; margin-bottom: 16px;">📭</div>
+                        <div>No holdings yet</div>
                     </div>
                 `;
                 document.getElementById('totalBalance').textContent = '$0.00';
@@ -437,12 +476,13 @@
                 html += `
                     <div class="coin-card" id="coin-${coinId}" onclick="toggleCoinDetails('${coinId}')">
                         <div class="coin-header">
-                            <div class="coin-icon ${coin.class}">${coin.icon}</div>
+                            <img src="${coin.icon}" alt="${coin.name}" class="coin-icon-real" 
+                                 onerror="this.src='https://via.placeholder.com/64?text=${coin.symbol}';">
                             <div class="coin-info">
                                 <div class="coin-name">${coin.name}</div>
                                 <div class="coin-symbol">${coin.symbol}</div>
                                 <div class="coin-price">@${formatCurrency(currentPrice)}</div>
-                                ${lastTxTime ? `<div class="last-tx-time">Giao dịch gần nhất: ${lastTxTime}</div>` : ''}
+                                ${lastTxTime ? `<div class="last-tx-time">Last trade: ${lastTxTime}</div>` : ''}
                             </div>
                             <div class="coin-stats">
                                 <div class="coin-amount">${formatNumber(holding.amount, 8)} ${coin.symbol}</div>
@@ -452,27 +492,27 @@
                         </div>
                         <div class="coin-details">
                             <div class="detail-row">
-                                <span>Số lượng hiện tại:</span>
+                                <span>Current Amount:</span>
                                 <span>${formatNumber(holding.amount, 8)} ${coin.symbol}</span>
                             </div>
                             <div class="detail-row">
-                                <span>Giá trị hiện tại:</span>
+                                <span>Current Value:</span>
                                 <span>${formatCurrency(currentValue)}</span>
                             </div>
                             ${lastTx ? `
                                 <div class="detail-row">
-                                    <span>Giao dịch gần nhất:</span>
-                                    <span>${formatDate(lastTx.timestamp)} - ${lastTx.type === 'buy' ? 'MUA' : 'BÁN'}</span>
+                                    <span>Last Transaction:</span>
+                                    <span>${formatDate(lastTx.timestamp)} - ${lastTx.type.toUpperCase()}</span>
                                 </div>
                             ` : ''}
-                            <div style="margin-top: 12px; font-size: 13px; color: #848e9c;">
-                                Lịch sử giao dịch (${transactions.length} lần):
+                            <div style="margin-top: 16px; font-size: 14px; color: #6b7280;">
+                                Transaction History (${transactions.length}):
                             </div>
                             <div class="transaction-history">
                                 ${transactions.slice().reverse().map(tx => `
                                     <div class="transaction-item">
                                         <div class="transaction-header">
-                                            <span class="transaction-type ${tx.type}">${tx.type === 'buy' ? '🟢 MUA' : '🔴 BÁN'}</span>
+                                            <span class="transaction-type ${tx.type}">${tx.type === 'buy' ? '🟢 BUY' : '🔴 SELL'}</span>
                                             <span>${formatDateShort(tx.timestamp)}</span>
                                         </div>
                                         <div class="transaction-details">
@@ -490,14 +530,12 @@
             document.getElementById('totalBalance').textContent = formatCurrency(totalValue);
         }
 
-        // ── Quy đổi 2 chiều: Amount ↔ Total USD ──
         function syncAmountAndTotal(direction = 'amount') {
             const amountEl = document.getElementById('amountInput');
             const totalEl  = document.getElementById('totalUsdInput');
             const priceEl  = document.getElementById('priceInput');
 
             const price = parseFloat(priceEl.value) || 0;
-
             if (price <= 0) return;
 
             if (direction === 'amount') {
@@ -516,11 +554,11 @@
 
             if (coinId && currentPrices[coinId]) {
                 const price = currentPrices[coinId];
-                priceDisplay.innerHTML = `Giá thị trường: <span>${formatCurrency(price)}</span>`;
+                priceDisplay.innerHTML = `Market Price: <span>${formatCurrency(price)}</span>`;
                 priceInput.value = price.toFixed(2);
-                syncAmountAndTotal('amount'); // cập nhật lại total khi đổi coin
+                syncAmountAndTotal('amount');
             } else {
-                priceDisplay.textContent = 'Choose a coin to see current price';
+                priceDisplay.textContent = 'Select a coin to see current price';
                 priceInput.value = '';
                 document.getElementById('totalUsdInput').value = '';
             }
@@ -530,7 +568,6 @@
         document.getElementById('totalUsdInput').addEventListener('input', () => syncAmountAndTotal('total'));
         document.getElementById('priceInput').addEventListener('input', () => syncAmountAndTotal('amount'));
 
-        // Buy
         document.getElementById('tradeForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -541,7 +578,7 @@
             const timestamp = Date.now();
 
             if (!coinId || amount <= 0 || price <= 0) {
-                alert('Vui lòng nhập đầy đủ thông tin!');
+                alert('Please fill in all fields correctly!');
                 return;
             }
 
@@ -561,15 +598,14 @@
 
             localStorage.setItem('cryptoPortfolio', JSON.stringify(portfolio));
 
-            alert(`✅ MUA thành công!\n${formatNumber(amount, 8)} ${COINS[coinId].symbol} @ ${formatCurrency(price)}\nTổng: ${formatCurrency(total)}`);
+            alert(`✅ Buy Successful!\n${formatNumber(amount, 8)} ${COINS[coinId].symbol} @ ${formatCurrency(price)}\nTotal: ${formatCurrency(total)}`);
 
             this.reset();
             document.getElementById('totalUsdInput').value = '';
-            document.getElementById('currentPriceDisplay').textContent = 'Choose a coin to see current price';
+            document.getElementById('currentPriceDisplay').textContent = 'Select a coin to see current price';
             updatePortfolioDisplay();
         });
 
-        // Sell (giữ nguyên logic FIFO đơn giản)
         function sellCoin() {
             const coinId = document.getElementById('coinSelect').value;
             const amount = parseFloat(document.getElementById('amountInput').value);
@@ -577,12 +613,12 @@
             const timestamp = Date.now();
 
             if (!coinId || amount <= 0 || price <= 0) {
-                alert('Vui lòng nhập đầy đủ thông tin!');
+                alert('Please fill in all fields correctly!');
                 return;
             }
 
             if (!portfolio[coinId] || portfolio[coinId].amount < amount) {
-                alert('❌ Không đủ số lượng để bán!');
+                alert('❌ Insufficient amount to sell!');
                 return;
             }
 
@@ -604,20 +640,20 @@
 
             localStorage.setItem('cryptoPortfolio', JSON.stringify(portfolio));
 
-            alert(`✅ BÁN thành công!\n${formatNumber(amount, 8)} ${COINS[coinId].symbol} @ ${formatCurrency(price)}\nNhận: ${formatCurrency(sellValue)}`);
+            alert(`✅ Sell Successful!\n${formatNumber(amount, 8)} ${COINS[coinId].symbol} @ ${formatCurrency(price)}\nReceived: ${formatCurrency(sellValue)}`);
 
             document.getElementById('tradeForm').reset();
             document.getElementById('totalUsdInput').value = '';
-            document.getElementById('currentPriceDisplay').textContent = 'Chọn coin để xem giá hiện tại';
+            document.getElementById('currentPriceDisplay').textContent = 'Select a coin to see current price';
             updatePortfolioDisplay();
         }
 
         function resetPortfolio() {
-            if (confirm('Bạn có chắc muốn xóa toàn bộ portfolio?')) {
+            if (confirm('Are you sure you want to reset the entire portfolio? This cannot be undone.')) {
                 portfolio = {};
                 localStorage.removeItem('cryptoPortfolio');
                 updatePortfolioDisplay();
-                alert('Đã reset portfolio!');
+                alert('Portfolio has been reset.');
             }
         }
 
